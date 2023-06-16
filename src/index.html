@@ -1,17 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Homework 10</title>
+    <title>My Cat App</title>
+    <!-- Додайте інші метатеги та стилі, які вам потрібні -->
   </head>
   <body>
-    <select class="breed-select"></select>
-    <p class="loader">Loading data, please wait...</p>
-    <p class="error">Oops! Something went wrong! Try reloading the page!</p>
-    <div class="cat-info"></div>
+    <!-- Додайте необхідні елементи, які використовуються у коді -->
+    <div id="loader">Loading...</div>
+    <div id="error" style="display: none">
+      Error occurred while loading cat information.
+    </div>
+    <img id="catImage" alt="" style="display: none" />
+    <div id="catInfo" style="display: none"></div>
+    <button id="nextButton">Next Cat</button>
 
-    <script src="/src/js/cat-api.js" type="module"></script>
-    <script src="/src/js/index.js" type="module"></script>
+    <!-- Додайте посилання на скрипти index.js та cat-api.js -->
+    <script src="/src/js/index.js"></script>
+    <script src="/src/js/cat-api.js"></script>
   </body>
 </html>
