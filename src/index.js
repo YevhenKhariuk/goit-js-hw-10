@@ -1,43 +1,60 @@
-const catImage = document.getElementById('catImage');
-const catInfo = document.getElementById('catInfo');
-const nextButton = document.getElementById('nextButton');
+import { fetchBreeds, fetchCatByBreed } from './cat-api.js';
 
-const apiKey = 'REPLACE_ME_WITH_YOUR_API_KEY';
-const apiUrl = 'https://api.thecatapi.com/v1/images/search';
+const breedSelect = document.querySelector('.breed-select');
+const loader = document.querySelector('.loader');
+const error = document.querySelector('.error');
+const catInfo = document.querySelector('.cat-info');
 
-async function fetchCatImage() {
+async function init() {
   try {
-    const response = await fetch(apiUrl, {
-      headers: {
-        'x-api-key': apiKey,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to fetch cat image.');
+    loader.classList.remove('hidden');
+    const breeds = await fetchBreeds();
+    for (const breed of breeds) {
+      const option = document.createElement('option');
+      option.value = breed.id;
+      option.textContent = breed.name;
+      breedSelect.appendChild(option);
     }
-
-    const data = await response.json();
-    const imageUrl = data[0].url;
-
-    catImage.src = imageUrl;
-    catImage.style.display = 'block';
-
-    catInfo.textContent = '';
-    catInfo.style.display = 'none';
-  } catch (error) {
-    console.error(error);
-    catImage.style.display = 'none';
-    catInfo.style.display = 'none';
-    showError();
+  } catch (err) {
+    error.classList.remove('hidden');
+  } finally {
+    loader.classList.add('hidden');
   }
 }
 
-function showError() {
-  const errorElement = document.getElementById('error');
-  errorElement.style.display = 'block';
+async function handleBreedSelect(event) {
+  try {
+    loader.classList.remove('hidden');
+    const breedId = event.target.value;
+    const catData = await fetchCatByBreed(breedId);
+    error.classList.add('hidden');
+    displayCatInfo(catData);
+  } catch (err) {
+    error.classList.remove('hidden');
+  } finally {
+    loader.classList.add('hidden');
+  }
 }
 
-nextButton.addEventListener('click', fetchCatImage);
+function displayCatInfo(catData) {
+  catInfo.innerHTML = '';
+  const img = document.createElement('img');
+  img.src = catData.url;
+  img.alt = catData.breeds[0].name;
+  catInfo.appendChild(img);
 
-fetchCatImage();
+  const name = document.createElement('h2');
+  name.textContent = catData.breeds[0].name;
+  catInfo.appendChild(name);
+
+  const description = document.createElement('p');
+  description.textContent = catData.breeds[0].description;
+  catInfo.appendChild(description);
+
+  const temperament = document.createElement('p');
+  temperament.textContent = `Temperament: ${catData.breeds[0].temperament}`;
+  catInfo.appendChild(temperament);
+}
+
+init();
+breedSelect.addEventListener('change', handleBreedSelect);

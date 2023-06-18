@@ -1,24 +1,25 @@
 const apiKey =
   'live_QMAtmTQkiGazrxebG23AS3wtLILf4Zqg5dX2f7pphHKbPeLUhSV5yTLIfmU4s3pe';
 
-async function fetchCatData() {
-  const response = await fetch(
-    'https://api.thecatapi.com/v1/images/search?api_key=' + apiKey
-  );
-  if (!response.ok) {
-    throw new Error('Failed to fetch cat data');
-  }
-  const data = await response.json();
-  return data[0];
+export async function fetchBreeds() {
+  const response = await fetch('https://api.thecatapi.com/v1/breeds', {
+    headers: {
+      'x-api-key': apiKey,
+    },
+  });
+  const breeds = await response.json();
+  return breeds;
 }
 
-async function fetchBreedData(breedId) {
+export async function fetchCatByBreed(breedId) {
   const response = await fetch(
-    `https://api.thecatapi.com/v1/breeds/${breedId}?api_key=${apiKey}`
+    `https://api.thecatapi.com/v1/images/search?breed_ids=${breedId}`,
+    {
+      headers: {
+        'x-api-key': apiKey,
+      },
+    }
   );
-  if (!response.ok) {
-    throw new Error('Failed to fetch breed data');
-  }
-  const data = await response.json();
-  return data;
+  const catData = await response.json();
+  return catData[0];
 }
