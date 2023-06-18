@@ -16,7 +16,7 @@ async function init() {
       breedSelect.appendChild(option);
     }
   } catch (err) {
-    error.style.display = 'block';
+    error.classList.remove('hidden');
   } finally {
     loader.classList.add('hidden');
   }
@@ -27,10 +27,10 @@ async function handleBreedSelect(event) {
     loader.classList.remove('hidden');
     const breedId = event.target.value;
     const catData = await fetchCatByBreed(breedId);
-    error.style.display = 'none';
+    error.classList.add('hidden');
     displayCatInfo(catData);
   } catch (err) {
-    error.style.display = 'block';
+    error.classList.remove('hidden');
   } finally {
     loader.classList.add('hidden');
   }
@@ -38,6 +38,7 @@ async function handleBreedSelect(event) {
 
 function displayCatInfo(catData) {
   catInfo.innerHTML = '';
+
   const img = document.createElement('img');
   img.src = catData.url;
   img.alt = catData.breeds[0].name;
@@ -56,10 +57,8 @@ function displayCatInfo(catData) {
   const temperamentHeader = document.createElement('span');
   temperamentHeader.textContent = 'Temperament: ';
   temperamentHeader.style.fontWeight = 'bold';
-
   const temperament = document.createElement('span');
   temperament.textContent = catData.breeds[0].temperament;
-
   textContainer.appendChild(temperamentHeader);
   textContainer.appendChild(temperament);
 
