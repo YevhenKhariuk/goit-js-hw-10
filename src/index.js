@@ -1,5 +1,6 @@
 import 'slim-select/dist/slimselect.css';
 import SlimSelect from 'slim-select';
+import Notiflix from 'notiflix';
 import { fetchBreeds, fetchCatByBreed } from './cat-api.js';
 
 const breedSelect = document.querySelector('.breed-select');
@@ -21,6 +22,7 @@ async function init() {
     });
   } catch (err) {
     error.classList.remove('hidden');
+    Notiflix.Notify.Failure('Помилка: не вдалося завантажити породи котів');
   } finally {
     loader.classList.add('hidden');
   }
@@ -35,6 +37,7 @@ async function handleBreedSelect(event) {
     displayCatInfo(catData);
   } catch (err) {
     error.classList.remove('hidden');
+    Notiflix.Notify.Failure('Помилка: не вдалося завантажити дані про кота');
   } finally {
     loader.classList.add('hidden');
   }
