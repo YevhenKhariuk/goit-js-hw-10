@@ -1,3 +1,5 @@
+import 'slim-select/dist/slimselect.css';
+import SlimSelect from 'slim-select';
 import { fetchBreeds, fetchCatByBreed } from './cat-api.js';
 
 const breedSelect = document.querySelector('.breed-select');
@@ -9,12 +11,14 @@ async function init() {
   try {
     loader.classList.remove('hidden');
     const breeds = await fetchBreeds();
-    for (const breed of breeds) {
-      const option = document.createElement('option');
-      option.value = breed.id;
-      option.textContent = breed.name;
-      breedSelect.appendChild(option);
-    }
+    const options = breeds.map(breed => ({
+      value: breed.id,
+      text: breed.name,
+    }));
+    new SlimSelect({
+      select: breedSelect,
+      data: options,
+    });
   } catch (err) {
     error.classList.remove('hidden');
   } finally {

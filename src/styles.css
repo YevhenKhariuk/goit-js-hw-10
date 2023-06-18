@@ -2,11 +2,19 @@
   display: flex;
   align-items: flex-start;
   margin-top: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  width: max-content;
 }
+
 .cat-info img {
   max-width: 480px;
   margin-right: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
+
 .cat-info div {
   max-width: 480px;
 }
@@ -31,10 +39,11 @@
   transform: rotateZ(45deg);
   perspective: 1000px;
   border-radius: 50%;
-  width: 480px;
+  width: 1020px;
   height: 20px;
   color: #fff;
 }
+
 .loader:before,
 .loader:after {
   content: '';
@@ -47,8 +56,9 @@
   transform: rotateX(70deg);
   animation: 1s spin linear infinite;
 }
+
 .loader:after {
-  color: #ff3d00;
+  color: #57a8f3;
   transform: rotateY(70deg);
   animation-delay: 0.4s;
 }
