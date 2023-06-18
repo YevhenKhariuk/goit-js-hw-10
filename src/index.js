@@ -16,7 +16,7 @@ async function init() {
       breedSelect.appendChild(option);
     }
   } catch (err) {
-    error.classList.remove('hidden');
+    error.style.display = 'block';
   } finally {
     loader.classList.add('hidden');
   }
@@ -27,10 +27,10 @@ async function handleBreedSelect(event) {
     loader.classList.remove('hidden');
     const breedId = event.target.value;
     const catData = await fetchCatByBreed(breedId);
-    error.classList.add('hidden');
+    error.style.display = 'none';
     displayCatInfo(catData);
   } catch (err) {
-    error.classList.remove('hidden');
+    error.style.display = 'block';
   } finally {
     loader.classList.add('hidden');
   }
@@ -43,17 +43,27 @@ function displayCatInfo(catData) {
   img.alt = catData.breeds[0].name;
   catInfo.appendChild(img);
 
+  const textContainer = document.createElement('div');
+
   const name = document.createElement('h2');
   name.textContent = catData.breeds[0].name;
-  catInfo.appendChild(name);
+  textContainer.appendChild(name);
 
   const description = document.createElement('p');
   description.textContent = catData.breeds[0].description;
-  catInfo.appendChild(description);
+  textContainer.appendChild(description);
 
-  const temperament = document.createElement('p');
-  temperament.textContent = `Temperament: ${catData.breeds[0].temperament}`;
-  catInfo.appendChild(temperament);
+  const temperamentHeader = document.createElement('span');
+  temperamentHeader.textContent = 'Temperament: ';
+  temperamentHeader.style.fontWeight = 'bold';
+
+  const temperament = document.createElement('span');
+  temperament.textContent = catData.breeds[0].temperament;
+
+  textContainer.appendChild(temperamentHeader);
+  textContainer.appendChild(temperament);
+
+  catInfo.appendChild(textContainer);
 }
 
 init();

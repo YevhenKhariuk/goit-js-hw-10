@@ -1,0 +1,28 @@
+.cat-info {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+.cat-info img {
+  max-width: 480px;
+  margin-right: 20px;
+}
+.cat-info div {
+  max-width: 480px;
+}
+
+.cat-info p {
+  font-weight: normal;
+}
+
+.cat-info h3 {
+  font-weight: bold;
+}
+
+.cat-info h2 {
+  margin-top: 0;
+}
+
+.error {
+  display: none;
+}
