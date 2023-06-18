@@ -108,3 +108,7 @@
     box-shadow: 0.2em -0.2em 0 0 currentcolor;
   }
 }
+
+.breed-select {
+    max-width: 1020px;
+}
